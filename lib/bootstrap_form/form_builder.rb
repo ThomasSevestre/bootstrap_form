@@ -246,8 +246,11 @@ module BootstrapForm
       name = args.first
 
       options[:class] = ["form-group", options[:class]].compact.join(' ')
-      options[:class] << " row" if get_group_layout(options[:layout]) == :horizontal &&
-                                   !options[:class].split.include?("form-row")
+      if get_group_layout(options[:layout]) == :horizontal
+        options[:class] << " form-row"
+      else
+        options[:class] << " row"
+      end
       options[:class] << " form-inline" if field_inline_override?(options[:layout])
       options[:class] << " #{feedback_class}" if options[:icon]
 
