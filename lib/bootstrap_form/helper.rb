@@ -1,8 +1,8 @@
 module BootstrapForm
   module Helper
 
-    def bootstrap_form_for(object, options = {}, &block)
-      options.reverse_merge!({builder: BootstrapForm::FormBuilder})
+    def bootstrap_form_for(object, options = {}, builder = BootstrapForm::FormBuilder, &block)
+      options.reverse_merge!(builder: builder)
 
       options = process_options(options)
 
@@ -17,8 +17,8 @@ module BootstrapForm
       bootstrap_form_for("", options, &block)
     end
 
-    def bootstrap_form_with(options = {}, &block)
-      options.reverse_merge!(builder: BootstrapForm::FormBuilder)
+    def bootstrap_form_with(options = {}, builder = BootstrapForm::FormBuilder, &block)
+      options.reverse_merge!(builder: builder)
 
       options = process_options(options)
 
