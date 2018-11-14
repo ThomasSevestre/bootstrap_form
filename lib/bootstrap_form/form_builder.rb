@@ -28,6 +28,7 @@ module BootstrapForm
         options[:inline_errors] != false
       end
       @acts_like_form_tag = options[:acts_like_form_tag]
+      @help_mode = options[:help_mode] || :classical
 
       super
     end
@@ -255,11 +256,28 @@ module BootstrapForm
       options[:class] << " #{feedback_class}" if options[:icon]
 
       content_tag(:div, options.except(:append, :id, :label, :help, :icon, :input_group_class, :label_col, :control_col, :add_control_col_class, :layout, :prepend)) do
-        label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
-        control = capture(&block)
+        option_label= options[:label]
+        case @help_mode
+        when :tooltip
+          has_help_text = get_help_text_by_i18n_key(name)
+          if has_help_text.present?
+            (option_label[:class]||= []) << 'help-tooltip'
+            option_label= option_label.merge(
+              :"data-toggle" => "tooltip",
+              :"data-placement" => "top",
+              :"data-html" => "true",
+              :"data-trigger" => "click",
+              title: has_help_text
+            )
+          end
+          help_text= ""
+        when :classical
+          help = options[:help]
+          help_text = generate_help(name, help).to_s
+        end
 
-        help = options[:help]
-        help_text = generate_help(name, help).to_s
+        label = generate_label(options[:id], name, option_label, options[:label_col], options[:layout]) if options[:label]
+        control = capture(&block)
 
         if get_group_layout(options[:layout]) == :horizontal
           control_class = options[:control_col] || control_col
