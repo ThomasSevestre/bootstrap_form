@@ -72,7 +72,7 @@ module BootstrapForm
     def file_field_with_bootstrap(name, options = {})
       options = options.reverse_merge(control_class: "custom-file-input")
       form_group_builder(name, options) do
-        content_tag(:div, class: "custom-file") do
+        # content_tag(:div, class: "custom-file") do
           input_with_error(name) do
             placeholder = options.delete(:placeholder) || "Choose file"
             placeholder_opts = { class: "custom-file-label" }
@@ -83,7 +83,7 @@ module BootstrapForm
             concat(input)
             concat(placeholder_label)
           end
-        end
+        # end
       end
     end
 
