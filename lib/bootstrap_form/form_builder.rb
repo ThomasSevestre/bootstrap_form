@@ -501,6 +501,10 @@ module BootstrapForm
         classes << "required"
       end
 
+      if label_icon == :empty
+        classes << "label-no-icon"
+      end
+
       options[:class] = classes.compact.join(" ").strip
       options.delete(:class) if options[:class].empty?
 
@@ -515,9 +519,7 @@ module BootstrapForm
 
       if label_icon
         content_tag(:div, class: label_wrapper_class) do
-          if label_icon == :empty
-            concat(content_tag("span", "", class: "no-icon"))
-          else
+          if label_icon != :empty
             concat(content_tag("img", "", label_icon))
           end
           concat(label)
