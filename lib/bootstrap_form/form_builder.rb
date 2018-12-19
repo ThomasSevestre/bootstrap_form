@@ -454,7 +454,8 @@ module BootstrapForm
           text: label_text,
           class: label_class,
           required: options.delete(:required),
-          skip_required: options.delete(:skip_required)
+          skip_required: options.delete(:skip_required),
+          icon: options.delete(:label_icon)
         }.merge(css_options[:id].present? ? { for: css_options[:id] } : {})
 
         if options.delete(:label_as_placeholder)
@@ -483,9 +484,15 @@ module BootstrapForm
       options[:for] = id if acts_like_form_tag
       classes = [options[:class]]
 
+      label_icon= options.delete(:icon)
+
       if layout_horizontal?(group_layout)
         classes << "col-form-label"
-        classes << (custom_label_col || label_col)
+        if label_icon
+          label_wrapper_class= custom_label_col || label_col
+        else
+          classes << "col-form-label #{custom_label_col || label_col}"
+        end
       elsif layout_inline?(group_layout)
         classes << "mr-sm-2"
       end
@@ -497,13 +504,26 @@ module BootstrapForm
       options[:class] = classes.compact.join(" ").strip
       options.delete(:class) if options[:class].empty?
 
-      if label_errors && has_error?(name)
+      label= if label_errors && has_error?(name)
         error_messages = get_error_messages(name)
         label_text = (options[:text] || object.class.human_attribute_name(name)).to_s.concat(" #{error_messages}")
         options[:class] = [options[:class], "text-danger"].compact.join(" ")
         label(name, label_text, options.except(:text))
       else
         label(name, options[:text], options.except(:text))
+      end
+
+      if label_icon
+        content_tag(:div, class: label_wrapper_class) do
+          if label_icon == :empty
+            concat(content_tag("span", "", class: "no-icon"))
+          else
+            concat(content_tag("img", "", label_icon))
+          end
+          concat(label)
+        end
+      else
+        label
       end
     end
 
