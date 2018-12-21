@@ -259,7 +259,7 @@ module BootstrapForm
         option_label= options[:label]
         case @help_mode
         when :tooltip
-          if options[:help]
+          if options[:help] != false
             has_help_text = get_help_text_by_i18n_key(name)
             if has_help_text.present?
               (option_label[:class]||= []) << 'help-tooltip'
