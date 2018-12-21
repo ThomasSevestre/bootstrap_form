@@ -259,16 +259,18 @@ module BootstrapForm
         option_label= options[:label]
         case @help_mode
         when :tooltip
-          has_help_text = get_help_text_by_i18n_key(name)
-          if has_help_text.present?
-            (option_label[:class]||= []) << 'help-tooltip'
-            option_label= option_label.merge(
-              :"data-toggle" => "tooltip",
-              :"data-placement" => "top",
-              :"data-html" => "true",
-              :"data-trigger" => "click",
-              title: has_help_text
-            )
+          if options[:help]
+            has_help_text = get_help_text_by_i18n_key(name)
+            if has_help_text.present?
+              (option_label[:class]||= []) << 'help-tooltip'
+              option_label= option_label.merge(
+                :"data-toggle" => "tooltip",
+                :"data-placement" => "top",
+                :"data-html" => "true",
+                :"data-trigger" => "click",
+                title: has_help_text
+              )
+            end
           end
           help_text= ""
         when :classical
