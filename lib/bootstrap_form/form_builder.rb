@@ -493,7 +493,7 @@ module BootstrapForm
         if label_icon
           label_wrapper_class= custom_label_col || label_col
         else
-          classes << "col-form-label #{custom_label_col || label_col}"
+          classes << custom_label_col || label_col
         end
       elsif layout_inline?(group_layout)
         classes << "mr-sm-2"
@@ -503,31 +503,32 @@ module BootstrapForm
         classes << "required"
       end
 
-      if label_icon == :empty
-        classes << "label-no-icon"
+      label_text = (options[:text] || object.class.human_attribute_name(name)).to_s
+      if label_errors && has_error?(name)
+        label_text = label_text.concat(" #{get_error_messages(name)}")
+        classes<< "text-danger"
       end
 
-      options[:class] = classes.compact.join(" ").strip
-      options.delete(:class) if options[:class].empty?
-
-      label= if label_errors && has_error?(name)
-        error_messages = get_error_messages(name)
-        label_text = (options[:text] || object.class.human_attribute_name(name)).to_s.concat(" #{error_messages}")
-        options[:class] = [options[:class], "text-danger"].compact.join(" ")
-        label(name, label_text, options.except(:text))
-      else
-        label(name, options[:text], options.except(:text))
-      end
+      classes.compact!
+      options[:class] = classes.join(" ")
+      options[:class].strip!
 
       if label_icon
         content_tag(:div, class: label_wrapper_class) do
-          if label_icon != :empty
-            concat(content_tag("img", "", label_icon))
+          label(name, nil, options.except(:text, :class)) do
+            span_classes= options[:class]
+
+            if label_icon == :empty
+              span_classes << " label-no-icon"
+            else
+              concat(content_tag("img", "", label_icon))
+            end
+
+            concat(content_tag(:span, label_text, class: span_classes))
           end
-          concat(label)
         end
       else
-        label
+        label(name, label_text, options.except(:text))
       end
     end
 
