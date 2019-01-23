@@ -18,7 +18,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2 required" for="user_email">Email</label>
           <div class="col-sm-10">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />
@@ -29,7 +29,7 @@ class BootstrapFormTest < ActionView::TestCase
           <input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" />
           <label class="form-check-label" for="user_terms">I agree to the terms</label>
         </div>
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2" for="user_misc">Misc</label>
           <div class="col-sm-10">
             <div class="form-check">
@@ -42,7 +42,7 @@ class BootstrapFormTest < ActionView::TestCase
             </div>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2" for="user_status">Status</label>
           <div class="col-sm-10">
             <select class="form-control" id="user_status" name="user[status]">
@@ -177,7 +177,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2 required" for="user_email">Email</label>
           <div class="col-sm-10">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />
@@ -188,7 +188,7 @@ class BootstrapFormTest < ActionView::TestCase
           <input class="form-check-input" id="user_terms" name="user[terms]" type="checkbox" value="1" />
           <label class="form-check-label" for="user_terms">I agree to the terms</label>
         </div>
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2" for="user_misc">Misc</label>
           <div class="col-sm-10">
             <div class="form-check">
@@ -201,7 +201,7 @@ class BootstrapFormTest < ActionView::TestCase
             </div>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2" for="user_status">Status</label>
           <div class="col-sm-10">
             <select class="form-control" id="user_status" name="user[status]">
@@ -320,7 +320,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="my-style" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2 required" for="user_email">Email</label>
           <div class="col-sm-10">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />
@@ -594,7 +594,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-1 required" for="user_email">Email</label>
           <div class="col-sm-10">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />
@@ -610,7 +610,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <div class="col-md-10 offset-md-2">
             <input class="btn btn-secondary" name="commit" type="submit" value="Create User" />
           </div>
@@ -626,7 +626,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <div class="col-sm-8 col-md-10 offset-sm-4 offset-md-2">
             <input class="btn btn-secondary" name="commit" type="submit" value="Create User" />
           </div>
@@ -642,7 +642,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2 required" for="user_email">Email</label>
           <div class="col-sm-5">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />
@@ -658,7 +658,7 @@ class BootstrapFormTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2 required" for="user_email">Email</label>
           <div class="col-sm-10 custom-class">
             <input class="form-control" id="user_email" name="user[email]" type="email" value="steve@example.com" />

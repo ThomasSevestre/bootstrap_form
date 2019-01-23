@@ -342,7 +342,7 @@ class BootstrapSelectsTest < ActionView::TestCase
       expected = <<-HTML.strip_heredoc
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;"/>
-        <div class="form-group row">
+        <div class="form-group form-row">
           <label class="col-form-label col-sm-2" for="user_misc">Misc</label>
           <div class="col-sm-10">
             <div class="rails-bootstrap-forms-date-select form-inline">
