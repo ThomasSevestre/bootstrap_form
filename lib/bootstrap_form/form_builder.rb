@@ -266,14 +266,12 @@ module BootstrapForm
           if options[:help] != false
             has_help_text = get_help_text_by_i18n_key(name)
             if has_help_text.present?
-              (option_label[:class]||= []) << 'help-tooltip'
-              option_label= option_label.merge(
+              option_label[:help_tooltip]= {
                 :"data-toggle" => "tooltip",
                 :"data-placement" => "top",
                 :"data-html" => "true",
-                :"data-trigger" => "click",
                 title: has_help_text
-              )
+              }
             end
           end
           help_text= ""
@@ -524,6 +522,12 @@ module BootstrapForm
       options[:class].strip!
       options.delete(:class) if options[:class].blank?
 
+      help_tooltip= options.delete(:help_tooltip)
+      if help_tooltip
+        help_tooltip[:href]= "javascript:void(0)"
+        help_tooltip[:class]= "help-tooltip"
+      end
+
       if label_icon
         content_tag(:div, class: label_wrapper_class) do
           label(name, nil, options.except(:text, :class)) do
@@ -536,7 +540,20 @@ module BootstrapForm
             end
 
             concat(content_tag(:span, label_text, class: span_classes))
+
+            if help_tooltip
+              concat(content_tag(:a, help_tooltip) do
+                concat(content_tag(:i, nil, class: "fa fa-info-circle"))
+              end)
+            end
           end
+        end
+      elsif help_tooltip
+        label(name, nil, options.except(:text)) do
+          concat(label_text)
+          concat(content_tag(:a, help_tooltip) do
+            concat(content_tag(:i, nil, class: "fa fa-info-circle"))
+          end)
         end
       else
         label(name, label_text, options.except(:text))
