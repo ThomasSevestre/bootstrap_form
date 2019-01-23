@@ -59,10 +59,8 @@ class BootstrapFieldsTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <div class="form-group">
         <label for="user_misc">Misc</label>
-        <div class="custom-file">
-          <input class="custom-file-input" id="user_misc" name="user[misc]" type="file" />
-          <label class="custom-file-label" for="user_misc">Choose file</label>
-        </div>
+        <input class="custom-file-input" id="user_misc" name="user[misc]" type="file" />
+        <label class="custom-file-label" for="user_misc">Choose file</label>
       </div>
     HTML
     assert_equivalent_xml expected, @builder.file_field(:misc)
@@ -72,10 +70,8 @@ class BootstrapFieldsTest < ActionView::TestCase
     expected = <<-HTML.strip_heredoc
       <div class="form-group">
         <label for="user_misc">Misc</label>
-        <div class="custom-file">
-          <input class="custom-file-input" id="user_misc" name="user[misc]" type="file" />
-          <label class="custom-file-label" for="user_misc">Pick a file</label>
-        </div>
+        <input class="custom-file-input" id="user_misc" name="user[misc]" type="file" />
+        <label class="custom-file-label" for="user_misc">Pick a file</label>
       </div>
     HTML
     assert_equivalent_xml expected, @builder.file_field(:misc, placeholder: "Pick a file")
@@ -86,10 +82,8 @@ class BootstrapFieldsTest < ActionView::TestCase
       expected = <<-HTML.strip_heredoc
         <div class="form-group">
           <label for="custom-id">Misc</label>
-          <div class="custom-file">
-            <input class="custom-file-input" id="custom-id" name="user[misc]" type="file" />
-            <label class="custom-file-label" for="custom-id">Choose file</label>
-          </div>
+          <input class="custom-file-input" id="custom-id" name="user[misc]" type="file" />
+          <label class="custom-file-label" for="custom-id">Choose file</label>
         </div>
       HTML
       assert_equivalent_xml expected, form_with_builder.file_field(:misc, id: "custom-id")
@@ -103,11 +97,9 @@ class BootstrapFieldsTest < ActionView::TestCase
       <input name="utf8" type="hidden" value="&#x2713;"/>
       <div class="form-group">
         <label for="user_misc">Misc</label>
-        <div class="custom-file">
-          <input class="custom-file-input is-invalid" id="user_misc" name="user[misc]" type="file" />
-          <label class="custom-file-label" for="user_misc">Choose file</label>
-          <div class="invalid-feedback">error for test</div>
-        </div>
+        <input class="custom-file-input is-invalid" id="user_misc" name="user[misc]" type="file" />
+        <label class="custom-file-label" for="user_misc">Choose file</label>
+        <div class="invalid-feedback">error for test</div>
       </div>
     </form>
     HTML
