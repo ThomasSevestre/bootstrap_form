@@ -21,7 +21,7 @@ Bootstrap v4-style forms into your Rails application.
 Add it to your Gemfile:
 
 ```ruby
-gem "bootstrap_form", ">= 4.0.0.alpha1"
+gem "bootstrap_form", ">= 4.1.0"
 ```
 
 Then:
@@ -213,10 +213,11 @@ validator with the associated model attribute. Presently this is one of:
 ActiveRecord::Validations::PresenceValidator or
 ActiveModel::Validations::PresenceValidator.
 
-In cases where this behavior is undesirable, use the `skip_required` option:
+In cases where this behavior is undesirable, use the `required` option to force the class to be present or absent:
 
 ```erb
-<%= f.password_field :password, label: "New Password", skip_required: true %>
+<%= f.password_field :login, label: "New Username", required: true %>
+<%= f.password_field :password, label: "New Password", required: false %>
 ```
 
 ### Input Elements / Controls
@@ -302,12 +303,24 @@ Which produces the following output:
 
 You still can use `wrapper_class` option to set only a css class. This is just a short form of `wrapper: { class: 'additional-class' }`.
 
+### Suppressing the Form Group Altogether
+
+You may have want to define your own form group div around a field. To do so, add the option `wrapper: false` to the input field. For example:
+
+```
+f.form_group :user do
+  f.email_field :email, wrapper: false
+end
+```
+
+Note that Bootstrap relies on the form group div to correctly format most fields, so if you use the `wrapper: false` option, you should provide your own form group div around the input field. You can write your own HTML, or use the `form_group` helper.
+
 ### Selects
 
 Our select helper accepts the same arguments as the [default Rails helper](http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-select). Here's an example of how you pass both options and html_options hashes:
 
 ```erb
-<%= f.select :product, [["Apple", 1], ["Grape", 2]], { label: "Choose your favorite fruit:" }, { class: "selectpicker",  wrapper: { class: 'has-warning', data: { foo: 'bar' } } } %>
+<%= f.select :product, [["Apple", 1], ["Grape", 2]], { label: "Choose your favorite fruit:", wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %>
 ```
 
 ### Checkboxes and Radios
@@ -352,6 +365,13 @@ Check boxes and radio buttons are wrapped in a `div.form-check`. You can add cla
 
 ```erb
 <%= f.radio_button :skill_level, 0, label: "Novice", inline: true, wrapper_class: "w-auto" %>
+```
+#### Switches
+
+To render checkboxes as switches with Bootstrap 4.2+, add the proper wrapper class:
+
+```erb
+<%= f.check_box :remember_me, custom: true, wrapper_class: 'custom-switch' %>
 ```
 
 #### Collections
@@ -537,6 +557,22 @@ The `label_col` and `control_col` css classes can also be changed per control:
     <%= f.submit %>
   <% end %>
 <% end %>
+```
+
+or default value can be changed in initializer:
+
+```erb
+# config/initializers/bootstrap_form.rb
+module BootstrapForm
+  class FormBuilder
+    def default_label_col
+      'col-sm-4'
+    end
+    def default_control_col
+      'col-sm-8'
+    end
+  end
+end
 ```
 
 Control col wrapper class can be modified with `add_control_col_class`. This option will preserve column definition:
