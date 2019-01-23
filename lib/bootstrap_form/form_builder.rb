@@ -281,7 +281,6 @@ module BootstrapForm
           help = options[:help]
           help_text = generate_help(name, help).to_s
         end
-
         label = generate_label(options[:id], name, option_label, options[:label_col], options[:layout]) if options[:label]
         control = capture(&block)
 
@@ -497,9 +496,9 @@ module BootstrapForm
       if layout_horizontal?(group_layout)
         classes << "col-form-label"
         if label_icon
-          label_wrapper_class= custom_label_col || label_col
+          label_wrapper_class= (custom_label_col || @label_col)
         else
-          classes << custom_label_col || label_col
+          classes << (custom_label_col || @label_col)
         end
       elsif layout_inline?(group_layout)
         classes << "mr-sm-2"
@@ -512,7 +511,9 @@ module BootstrapForm
         classes << "required" if required_attribute?(object, name)
       end
 
-      label_text = (options[:text] || object.class.human_attribute_name(name)).to_s
+      label_text= options[:text]
+      label_text||= object.class.human_attribute_name(name) if object && object.class.respond_to?(:human_attribute_name)
+      label_text= label_text.to_s
       if label_errors && has_error?(name)
         label_text = label_text.concat(" #{get_error_messages(name)}")
         classes<< "text-danger"
@@ -521,6 +522,7 @@ module BootstrapForm
       classes.compact!
       options[:class] = classes.join(" ")
       options[:class].strip!
+      options.delete(:class) if options[:class].blank?
 
       if label_icon
         content_tag(:div, class: label_wrapper_class) do
