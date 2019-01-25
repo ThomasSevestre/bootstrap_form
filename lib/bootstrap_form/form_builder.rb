@@ -264,7 +264,7 @@ module BootstrapForm
         case @help_mode
         when :tooltip
           if options[:help] != false
-            has_help_text = get_help_text_by_i18n_key(name)
+            has_help_text = options[:help] || get_help_text_by_i18n_key(name)
             if has_help_text.present?
               option_label[:help_tooltip]= {
                 :"data-toggle" => "tooltip",
