@@ -135,7 +135,7 @@ module BootstrapForm
     def check_box_with_bootstrap(name, options={}, checked_value="1", unchecked_value="0", &block)
       options = options.symbolize_keys!
       check_box_options = options.except(:label, :label_class, :error_message, :help,
-                                         :inline, :custom, :hide_label, :skip_label, :wrapper_class)
+                                         :inline, :custom, :hide_label, :skip_label, :wrapper_class, :wrapper_id)
       check_box_classes = [check_box_options[:class]]
       check_box_classes << "position-static" if options[:skip_label] || options[:hide_label]
       check_box_classes << "is-invalid" if has_error?(name)
@@ -173,7 +173,7 @@ module BootstrapForm
 
       wrapper_class.append(options[:wrapper_class]) if options[:wrapper_class]
 
-      content_tag(:div, class: wrapper_class.compact.join(" ")) do
+      content_tag(:div, id: options[:wrapper_id], class: wrapper_class.compact.join(" ")) do
         html = if options[:skip_label]
                  checkbox_html
                else
@@ -190,7 +190,7 @@ module BootstrapForm
       options = args.extract_options!.symbolize_keys!
       radio_options = options.except(:label, :label_class, :error_message, :help,
                                      :inline, :custom, :hide_label, :skip_label,
-                                     :wrapper_class)
+                                     :wrapper_class, :wrapper_id)
       radio_classes = [options[:class]]
       radio_classes << "position-static" if options[:skip_label] || options[:hide_label]
       radio_classes << "is-invalid" if has_error?(name)
@@ -217,7 +217,7 @@ module BootstrapForm
 
       wrapper_class.append(options[:wrapper_class]) if options[:wrapper_class]
 
-      content_tag(:div, class: wrapper_class.compact.join(" ")) do
+      content_tag(:div, id: options[:wrapper_id], class: wrapper_class.compact.join(" ")) do
         html = if options[:skip_label]
                  radio_html
                else
@@ -257,9 +257,12 @@ module BootstrapForm
       options[:class] << " form-inline" if field_inline_override?(options[:layout])
       options[:class] << " #{feedback_class}" if options[:icon]
 
-      content_tag(:div, options.except(:append, :id, :label, :help, :icon,
+      wrapper_options= options.except(:append, :id, :label, :help, :icon,
                                        :input_group_class, :label_col, :control_col,
-                                       :add_control_col_class, :layout, :prepend)) do
+                                       :add_control_col_class, :layout, :prepend)
+      wrapper_options.merge!(id: options.delete(:wrapper_id))
+
+      content_tag(:div, wrapper_options) do
         option_label= options[:label]
         case @help_mode
         when :tooltip
@@ -407,6 +410,7 @@ module BootstrapForm
       options.symbolize_keys!
 
       wrapper_class = options.delete(:wrapper_class)
+      wrapper_id = options.delete(:wrapper_id)
       wrapper_options = options.delete(:wrapper)
 
       html_options.symbolize_keys! if html_options
@@ -433,7 +437,8 @@ module BootstrapForm
         control_col: control_col,
         add_control_col_class: add_control_col_class,
         layout: layout,
-        class: wrapper_class
+        class: wrapper_class,
+        wrapper_id: wrapper_id
       }
 
       form_group_options.merge!(wrapper_options) if wrapper_options.is_a?(Hash)
